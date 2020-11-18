@@ -278,6 +278,16 @@ async function processRDFPayload(stream, decoder, format, baseIRI) {
         scriptElement.insertBefore(document.createTextNode(script), scriptElement.firstChild);
         document.getElementById("prefixes").appendChild(serializer.serializePrefixes(store));
         document.getElementById("triples").appendChild(serializer.serializeTriples(store));
+        const button1 = document.createElement("button");
+        button1.innerHTML = "Make content editable";
+        button1.setAttribute('id', 'editable-button');
+        button1.setAttribute("onclick", "makeEditable()");
+        document.body.appendChild(button1);
+        const button2 = document.createElement("button");
+        button2.innerHTML = "Send put-request";
+        button2.setAttribute('id', 'put-request-button');
+        button2.setAttribute("onclick", "putRequest()");
+        document.body.appendChild(button2);
         return new XMLSerializer().serializeToString(document);
     }
 }

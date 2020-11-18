@@ -40,6 +40,39 @@
         //script
     </script>
     <script defer id="content-script" src="../main.js"></script>
+    <script>
+        function makeEditable() {
+            document.getElementById("prefixes").setAttribute("contenteditable", "true");
+            document.getElementById("triples").setAttribute("contenteditable", "true");
+        }
+
+        function putRequest() {
+            const xhttp = new XMLHttpRequest();
+
+            const tri = [];
+            document.querySelectorAll("div.triples").forEach(function (e) {
+                const newLength = tri.push(e.innerText)
+            });
+
+            const pre = [];
+            document.querySelectorAll("div.prefixes").forEach(function (e) {
+                const newLength = pre.push(e.innerText)
+            });
+
+            const content = [];
+            document.querySelectorAll("div.prefixes, div.triples").forEach(function (e) {
+                const newLength = content.push(e.innerText)
+            });
+
+            xhttp.open("PUT", document.URL, true);
+            xhttp.setRequestHeader("Content-type", "text/turtle");
+            xhttp.onload = function () {
+                alert('Status Code: ' + xhttp.status + " " + xhttp.statusText);
+            };
+            console.log(pre + tri);
+            xhttp.send(pre + tri);
+        }
+    </script>
 </head>
 <body id="template">
 <p id="hint">
